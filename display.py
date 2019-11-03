@@ -18,7 +18,9 @@ User can
 """
 
 from tkinter import *
-import backend
+from backend import Database
+
+database=Database("quotes.db")
 
 window=Tk()
 #window.minsize(500,500)
@@ -26,17 +28,17 @@ window=Tk()
 
 def view_all():
     listbox.delete(0,END)
-    for row in backend.view():
+    for row in database.view():
         listbox.insert(END,row)
 
 
 def search_for():
     listbox.delete(0,END)
-    for row in backend.search(quote_text.get(), movie_text.get(), character_text.get(), actor_text.get()):
+    for row in database.search(quote_text.get(), movie_text.get(), character_text.get(), actor_text.get()):
         listbox.insert(END,row)
 
 def add_entry():
-    backend.insert(quote_text.get(), movie_text.get(), character_text.get(), actor_text.get())
+    database.insert(quote_text.get(), movie_text.get(), character_text.get(), actor_text.get())
     listbox.delete(0,END)
     listbox.insert(END, (quote_text.get(), movie_text.get(), character_text.get(), actor_text.get()))
 
@@ -59,11 +61,11 @@ def get_selected_row(event):
 
 
 def delete_command():
-    backend.delete(selected_tuple[0])
+    database.delete(selected_tuple[0])
     view_all()
 
 def update_command():
-    backend.edit(selected_tuple[0], quote_text.get(), movie_text.get(), character_text.get(), actor_text.get())
+    database.edit(selected_tuple[0], quote_text.get(), movie_text.get(), character_text.get(), actor_text.get())
     view_all()
 
 #TITLE
